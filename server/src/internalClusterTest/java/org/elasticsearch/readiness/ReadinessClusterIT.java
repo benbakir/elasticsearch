@@ -204,6 +204,8 @@ public class ReadinessClusterIT extends ESIntegTestCase {
         internalCluster().restartNode(masterNode, new InternalTestCluster.RestartCallback() {
             @Override
             public Settings onNodeStopped(String nodeName) throws Exception {
+                expectMasterNotFound();
+
                 logger.info("--> master node [{}] stopped", nodeName);
 
                 for (String dataNode : dataNodes) {
