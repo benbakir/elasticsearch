@@ -13,9 +13,10 @@ import org.apache.lucene.util.SetOnce;
 import org.elasticsearch.Version;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.admin.cluster.remote.RemoteClusterNodesAction;
-import org.elasticsearch.action.admin.cluster.state.ClusterStateAction;
 import org.elasticsearch.action.admin.cluster.state.ClusterStateRequest;
 import org.elasticsearch.action.admin.cluster.state.ClusterStateResponse;
+import org.elasticsearch.action.admin.cluster.state.RemoteClusterStateAction;
+import org.elasticsearch.action.admin.cluster.state.RemoteClusterStateRequest;
 import org.elasticsearch.cluster.ClusterName;
 import org.elasticsearch.cluster.node.DiscoveryNode;
 import org.elasticsearch.cluster.node.DiscoveryNodeRole;
@@ -320,11 +321,11 @@ public class SniffConnectionStrategy extends RemoteConnectionStrategy {
                     request = RemoteClusterNodesAction.Request.REMOTE_CLUSTER_SERVER_NODES;
                     sniffResponseHandler = new RemoteClusterNodesSniffResponseHandler(connection, listener, seedNodesSuppliers);
                 } else {
-                    action = ClusterStateAction.NAME;
+                    action = RemoteClusterStateAction.NAME;
                     final ClusterStateRequest clusterStateRequest = new ClusterStateRequest(SNIFF_REQUEST_TIMEOUT);
                     clusterStateRequest.clear();
                     clusterStateRequest.nodes(true);
-                    request = clusterStateRequest;
+                    request = new RemoteClusterStateRequest(clusterStateRequest);
                     sniffResponseHandler = new ClusterStateSniffResponseHandler(connection, listener, seedNodesSuppliers);
                 }
 

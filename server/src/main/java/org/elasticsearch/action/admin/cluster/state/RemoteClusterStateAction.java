@@ -12,16 +12,16 @@ package org.elasticsearch.action.admin.cluster.state;
 import org.elasticsearch.action.ActionType;
 import org.elasticsearch.action.RemoteClusterActionType;
 
-public class ClusterStateAction extends ActionType<ClusterStateResponse> {
+public class RemoteClusterStateAction extends ActionType<ClusterStateResponse> {
 
-    public static final ClusterStateAction INSTANCE = new ClusterStateAction();
-    public static final String NAME = "cluster:monitor/state";
+    public static final RemoteClusterStateAction INSTANCE = new RemoteClusterStateAction();
+    public static final String NAME = "cluster:monitor/state_remote";
     public static final RemoteClusterActionType<ClusterStateResponse> REMOTE_TYPE = new RemoteClusterActionType<>(
-        RemoteClusterStateAction.NAME,
+        NAME,
         ClusterStateResponse::new
     );
 
-    private ClusterStateAction() {
+    private RemoteClusterStateAction() {
         super(NAME);
     }
 }

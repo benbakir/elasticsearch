@@ -13,9 +13,9 @@ import org.apache.lucene.store.AlreadyClosedException;
 import org.elasticsearch.TransportVersion;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.admin.cluster.remote.RemoteClusterNodesAction;
-import org.elasticsearch.action.admin.cluster.state.ClusterStateAction;
-import org.elasticsearch.action.admin.cluster.state.ClusterStateRequest;
 import org.elasticsearch.action.admin.cluster.state.ClusterStateResponse;
+import org.elasticsearch.action.admin.cluster.state.RemoteClusterStateAction;
+import org.elasticsearch.action.admin.cluster.state.RemoteClusterStateRequest;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchShardsRequest;
 import org.elasticsearch.action.search.SearchShardsResponse;
@@ -161,9 +161,9 @@ public class RemoteClusterConnectionTests extends ESTestCase {
                 }
             );
             newService.registerRequestHandler(
-                ClusterStateAction.NAME,
+                RemoteClusterStateAction.NAME,
                 EsExecutors.DIRECT_EXECUTOR_SERVICE,
-                ClusterStateRequest::new,
+                RemoteClusterStateRequest::new,
                 (request, channel, task) -> {
                     DiscoveryNodes.Builder builder = DiscoveryNodes.builder();
                     for (DiscoveryNode node : knownNodes) {
@@ -647,7 +647,7 @@ public class RemoteClusterConnectionTests extends ESTestCase {
                             oneOf(RemoteClusterService.REMOTE_CLUSTER_HANDSHAKE_ACTION_NAME, RemoteClusterNodesAction.TYPE.name())
                         );
                     } else {
-                        assertThat(action, oneOf(TransportService.HANDSHAKE_ACTION_NAME, ClusterStateAction.NAME));
+                        assertThat(action, oneOf(TransportService.HANDSHAKE_ACTION_NAME, RemoteClusterStateAction.NAME));
                     }
                     connection.sendRequest(requestId, action, request, options);
                 });
