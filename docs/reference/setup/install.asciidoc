@@ -1,4 +1,4 @@
-[[install-elasticsearch]]
+Benbakir+tab+control+shift+m[[install-elasticsearch]]
 == Installing Elasticsearch
 
 [discrete]
